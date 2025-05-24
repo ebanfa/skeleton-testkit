@@ -1,0 +1,77 @@
+# -------------------------
+# OS-specific files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Editor / IDE files
+# -------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.bak
+
+# -------------------------
+# Go build artifacts
+# -------------------------
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Coverage and build reports
+*.coverprofile
+*.cov
+*.coverage
+*.lcov
+
+# Go workspaces and modules
+go.sum
+go.work
+go.work.sum
+
+# Local binary output
+bin/
+build/
+dist/
+out/
+
+# Test binary (if using `go test -c`)
+*.test
+
+# -------------------------
+# Package managers & vendoring
+# -------------------------
+vendor/         # uncomment if vendor dir is generated and shouldn't be tracked
+.glide/
+Godeps/
+
+# -------------------------
+# Development tools & temp files
+# -------------------------
+.tmp/
+.temp/
+.cache/
+.air/
+realize.yaml
+*.log
+
+# -------------------------
+# Docker / CI / Kubernetes
+# -------------------------
+docker-compose.override.yml
+.env
+.env.*
+*.local.yml
+*.local.yaml
+
+# -------------------------
+# Node modules (for hybrid projects)
+# -------------------------
+node_modules/
