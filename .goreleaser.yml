@@ -1,0 +1,217 @@
+project_name: skeleton-testkit
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+
+builds:
+  - id: skeleton-testkit
+    main: ./cmd/testkit
+    binary: skeleton-testkit
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -X main.builtBy=goreleaser
+
+  - id: container-manager
+    main: ./cmd/container-manager
+    binary: container-manager
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+      - -X main.builtBy=goreleaser
+
+archives:
+  - id: skeleton-testkit
+    builds:
+      - skeleton-testkit
+      - container-manager
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+      - configs/**/*
+      - examples/**/*
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^chore:'
+      - '^style:'
+      - Merge pull request
+      - Merge branch
+      - go mod tidy
+  groups:
+    - title: Features
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 1
+    - title: 'Performance improvements'
+      regexp: "^.*perf[(\\w)]*:+.*$"
+      order: 2
+    - title: Others
+      order: 999
+
+dockers:
+  - image_templates:
+      - "fintechain/skeleton-testkit:{{ .Tag }}"
+      - "fintechain/skeleton-testkit:v{{ .Major }}"
+      - "fintechain/skeleton-testkit:v{{ .Major }}.{{ .Minor }}"
+      - "fintechain/skeleton-testkit:latest"
+    dockerfile: Dockerfile.dev
+    build_flag_templates:
+      - "--target=production"
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+
+brews:
+  - name: skeleton-testkit
+    repository:
+      owner: fintechain
+      name: homebrew-tap
+    folder: Formula
+    homepage: "https://github.com/fintechain/skeleton-testkit"
+    description: "Testing framework for skeleton-based applications"
+    license: "MIT"
+    test: |
+      system "#{bin}/skeleton-testkit version"
+    dependencies:
+      - name: docker
+        type: optional
+    install: |
+      bin.install "skeleton-testkit"
+      bin.install "container-manager"
+
+nfpms:
+  - id: skeleton-testkit
+    package_name: skeleton-testkit
+    vendor: Fintechain
+    homepage: https://github.com/fintechain/skeleton-testkit
+    maintainer: Fintechain <dev@fintechain.com>
+    description: Testing framework for skeleton-based applications
+    license: MIT
+    formats:
+      - deb
+      - rpm
+      - apk
+    dependencies:
+      - docker.io
+    recommends:
+      - docker-compose
+    bindir: /usr/bin
+    contents:
+      - src: ./configs
+        dst: /etc/skeleton-testkit
+        type: config
+      - src: ./examples
+        dst: /usr/share/skeleton-testkit/examples
+      - src: ./README.md
+        dst: /usr/share/doc/skeleton-testkit/README.md
+      - src: ./LICENSE
+        dst: /usr/share/doc/skeleton-testkit/LICENSE
+
+publishers:
+  - name: fury.io
+    ids:
+      - skeleton-testkit
+    dir: "{{ dir .ArtifactPath }}"
+    cmd: curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/fintechain/
+
+release:
+  github:
+    owner: fintechain
+    name: skeleton-testkit
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## skeleton-testkit {{.Tag}}
+
+    This release includes new features, bug fixes, and improvements to the skeleton-testkit framework.
+
+    ### Installation
+
+    #### Binary Download
+    Download the appropriate binary for your platform from the assets below.
+
+    #### Homebrew (macOS/Linux)
+    ```bash
+    brew install fintechain/tap/skeleton-testkit
+    ```
+
+    #### Docker
+    ```bash
+    docker pull fintechain/skeleton-testkit:{{.Tag}}
+    ```
+
+    #### Go Install
+    ```bash
+    go install github.com/fintechain/skeleton-testkit/cmd/testkit@{{.Tag}}
+    ```
+
+  footer: |
+    ### Full Changelog
+    **Full Changelog**: https://github.com/fintechain/skeleton-testkit/compare/{{.PreviousTag}}...{{.Tag}}
+
+    ### Support
+    - 📖 [Documentation](https://docs.fintechain.com/skeleton-testkit)
+    - 🐛 [Report Issues](https://github.com/fintechain/skeleton-testkit/issues)
+    - 💬 [Community Forum](https://community.fintechain.com/skeleton-testkit)
+
+  extra_files:
+    - glob: ./configs/**/*
+    - glob: ./examples/**/* 

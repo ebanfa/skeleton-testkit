@@ -1,0 +1,95 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": ["feature", "enhancement", "feat"]
+    },
+    {
+      "title": "## 🐛 Bug Fixes",
+      "labels": ["bug", "fix", "bugfix"]
+    },
+    {
+      "title": "## 📚 Documentation",
+      "labels": ["documentation", "docs"]
+    },
+    {
+      "title": "## 🧪 Testing",
+      "labels": ["test", "testing"]
+    },
+    {
+      "title": "## ⚡ Performance",
+      "labels": ["performance", "perf"]
+    },
+    {
+      "title": "## 🔧 Maintenance",
+      "labels": ["maintenance", "chore", "refactor"]
+    },
+    {
+      "title": "## 🔒 Security",
+      "labels": ["security"]
+    },
+    {
+      "title": "## 📦 Dependencies",
+      "labels": ["dependencies", "deps"]
+    }
+  ],
+  "ignore_labels": [
+    "ignore-for-release",
+    "duplicate",
+    "question",
+    "invalid",
+    "wontfix"
+  ],
+  "sort": "ASC",
+  "template": "${{CHANGELOG}}",
+  "pr_template": "- ${{TITLE}} (#${{NUMBER}})",
+  "empty_template": "- No changes",
+  "label_extractor": [
+    {
+      "pattern": "^(feat|feature)(\\(.+\\))?!?:",
+      "target": "feature"
+    },
+    {
+      "pattern": "^(fix|bugfix)(\\(.+\\))?!?:",
+      "target": "bug"
+    },
+    {
+      "pattern": "^(docs|doc)(\\(.+\\))?!?:",
+      "target": "documentation"
+    },
+    {
+      "pattern": "^(test|tests)(\\(.+\\))?!?:",
+      "target": "test"
+    },
+    {
+      "pattern": "^(perf|performance)(\\(.+\\))?!?:",
+      "target": "performance"
+    },
+    {
+      "pattern": "^(chore|refactor|style)(\\(.+\\))?!?:",
+      "target": "maintenance"
+    },
+    {
+      "pattern": "^(security|sec)(\\(.+\\))?!?:",
+      "target": "security"
+    },
+    {
+      "pattern": "^(deps|dependencies)(\\(.+\\))?!?:",
+      "target": "dependencies"
+    }
+  ],
+  "transformers": [
+    {
+      "pattern": "\\[(.+)\\]",
+      "target": "**$1**"
+    }
+  ],
+  "max_tags_to_fetch": 200,
+  "max_pull_requests": 200,
+  "max_back_track_time_days": 365,
+  "exclude_merge_branches": [
+    "main",
+    "master",
+    "develop"
+  ]
+} 

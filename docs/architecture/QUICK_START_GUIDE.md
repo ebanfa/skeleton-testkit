@@ -11,7 +11,7 @@ This guide provides immediate actionable steps to begin implementing the skeleto
 # 1. Initialize project structure
 mkdir skeleton-testkit
 cd skeleton-testkit
-go mod init github.com/fintechain/skeleton-testkit
+go mod init github.com/ebanfa/skeleton-testkit
 
 # 2. Create directory structure
 mkdir -p {pkg/{testkit,container,verification,health},internal/{domain,application,infrastructure,interfaces},examples,cmd,test/{unit,integration,fixtures},docs}
@@ -23,7 +23,7 @@ mkdir -p .github/workflows
 
 ### Core Dependencies (go.mod)
 ```go
-module github.com/fintechain/skeleton-testkit
+module github.com/ebanfa/skeleton-testkit
 
 go 1.21
 
@@ -308,7 +308,7 @@ import (
     "context"
     "testing"
     "github.com/stretchr/testify/require"
-    "github.com/fintechain/skeleton-testkit/pkg/testkit"
+    "github.com/ebanfa/skeleton-testkit/pkg/testkit"
 )
 
 func TestBasicSkeletonAppCreation(t *testing.T) {

@@ -66,6 +66,7 @@ require (
 ##### 3.2.1 Project Bootstrap
 ```bash
 # Priority 1: Project setup
+skeleton-testkit/
 ├── go.mod                 # Module definition
 ├── Makefile              # Build automation
 ├── .github/workflows/    # CI/CD pipelines
