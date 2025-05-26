@@ -100,7 +100,7 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Download dependencies
-      run: make deps
+      run: go mod download
 
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v3
@@ -109,13 +109,13 @@ jobs:
         args: --timeout=5m
 
     - name: Run go vet
-      run: make vet
+      run: go vet ./...
 
     - name: Check formatting
       run: |
-        make fmt
+        go fmt ./...
         if [ -n "$(git status --porcelain)" ]; then
-          echo "Code is not formatted. Please run 'make fmt'"
+          echo "Code is not formatted. Please run 'go fmt ./...'"
           git diff
           exit 1
         fi
@@ -167,25 +167,13 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Download dependencies
-      run: make deps
+      run: go mod download
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Start test environment
-      run: make dev-up
-
-    - name: Wait for services
-      run: |
-        timeout 60 bash -c 'until docker-compose -f docker-compose.dev.yml exec -T postgres pg_isready -U testuser; do sleep 2; done'
-        timeout 60 bash -c 'until docker-compose -f docker-compose.dev.yml exec -T redis redis-cli ping; do sleep 2; done'
-
     - name: Run integration tests
       run: make test-integration
-
-    - name: Stop test environment
-      if: always()
-      run: make dev-down
 
   build:
     name: Build
@@ -211,10 +199,10 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Download dependencies
-      run: make deps
+      run: go mod download
 
     - name: Build binaries
-      run: make build-all
+      run: make build
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
@@ -270,7 +258,7 @@ jobs:
           ${{ runner.os }}-go-${{ matrix.go-version }}-
 
     - name: Download dependencies
-      run: make deps
+      run: go mod download
 
     - name: Run tests
       run: make test-unit
