@@ -150,7 +150,7 @@ pkg/testkit/        # Main entry point with convenience functions
 ```go
 // go.mod would include:
 require (
-    github.com/ebanfa/skeleton v1.0.0                    // Import skeleton
+    github.com/fintechain/skeleton v1.0.0                    // Import skeleton
     github.com/testcontainers/testcontainers-go v0.20.0  // Container management
     github.com/docker/docker v24.0.0                     // Docker API
     github.com/stretchr/testify v1.8.0                   // Testing utilities

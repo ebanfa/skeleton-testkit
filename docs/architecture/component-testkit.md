@@ -35,7 +35,7 @@ component-testkit/                    # Separate Go module
 module github.com/fintechain/component-testkit
 
 require (
-    github.com/ebanfa/skeleton v1.0.0           // Imports skeleton
+    github.com/fintechain/skeleton v1.0.0           // Imports skeleton
     github.com/testcontainers/testcontainers-go v0.20.0
 )
 

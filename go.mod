@@ -6,7 +6,7 @@ toolchain go1.24.2
 
 require (
 	github.com/docker/go-connections v0.4.0
-	github.com/ebanfa/skeleton v0.1.0
+	github.com/fintechain/skeleton v0.1.0
 	github.com/stretchr/testify v1.9.0
 	github.com/testcontainers/testcontainers-go v0.26.0
 	go.uber.org/fx v1.20.0

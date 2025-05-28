@@ -11,7 +11,7 @@ This guide provides immediate actionable steps to begin implementing the skeleto
 # 1. Initialize project structure
 mkdir skeleton-testkit
 cd skeleton-testkit
-go mod init github.com/ebanfa/skeleton-testkit
+go mod init github.com/fintechain/skeleton-testkit
 
 # 2. Create directory structure
 mkdir -p {pkg/{testkit,container,verification,health},internal/{domain,application,infrastructure,interfaces},examples,cmd,test/{unit,integration,fixtures},docs}
@@ -23,12 +23,12 @@ mkdir -p .github/workflows
 
 ### Core Dependencies (go.mod)
 ```go
-module github.com/ebanfa/skeleton-testkit
+module github.com/fintechain/skeleton-testkit
 
 go 1.21
 
 require (
-    github.com/ebanfa/skeleton v1.0.0
+    github.com/fintechain/skeleton v1.0.0
     github.com/testcontainers/testcontainers-go v0.20.0
     github.com/docker/docker v24.0.0
     github.com/stretchr/testify v1.8.0
@@ -308,7 +308,7 @@ import (
     "context"
     "testing"
     "github.com/stretchr/testify/require"
-    "github.com/ebanfa/skeleton-testkit/pkg/testkit"
+    "github.com/fintechain/skeleton-testkit/pkg/testkit"
 )
 
 func TestBasicSkeletonAppCreation(t *testing.T) {
@@ -330,7 +330,7 @@ func TestBasicSkeletonAppCreation(t *testing.T) {
 - **Implementation Plan**: [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md) - Detailed phase breakdown
 - **Specification**: [skeleton-testkit-specification.md](./skeleton-testkit-specification.md) - Complete API specification
 - **Component Testkit**: [component-testkit.md](./component-testkit.md) - Related concepts and patterns
-- **Skeleton Framework**: [skeleton repository](https://github.com/ebanfa/skeleton) - Target framework
+- **Skeleton Framework**: [skeleton repository](https://github.com/fintechain/skeleton) - Target framework
 
 ## 🎯 Focus Areas
 

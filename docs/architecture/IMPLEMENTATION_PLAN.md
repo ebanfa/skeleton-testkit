@@ -43,7 +43,7 @@ skeleton-testkit/
 ```go
 // Core dependencies
 require (
-    github.com/ebanfa/skeleton v1.0.0                    // Skeleton framework
+    github.com/fintechain/skeleton v1.0.0                    // Skeleton framework
     github.com/testcontainers/testcontainers-go v0.20.0  // Container management
     github.com/docker/docker v24.0.0                     // Docker API
     github.com/stretchr/testify v1.8.0                   // Testing utilities
